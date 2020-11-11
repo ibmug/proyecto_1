@@ -1,167 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    .google-maps {
+    position: relative;
+    padding-bottom: 50%;  /* This is the aspect ratio */
+    height: 0;
+    overflow: hidden;
+    }
+    #map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: grey;    
+    }
 
-var municipios = [{name:"benito juarez", pob:317999},
-                 {name:"cuauhtemoc", pob: 415379},
-                 {name:"miguel hidalgo", pob:302489},
-                 {name:"venustiano carranza", pob: 370844},
-                 {name:"alvaro obregon", pob:724491},
-                 {name:"azcapotzalco", pob:376071},
-                 {name:"coyoacan", pob: 575878},
-                 {name: "cuajimalpa", pob: 214710},
-                 {name:"gustavo a madero", pob: 1133065},
-                 {name: "iztacalco", pob: 374476},
-                 {name: "iztapalapa", pob: 2107798},
-                 {name: "magdalena contreras", pob: 259934},
-                 {name: "tlahuac", pob: 481680},
-                 {name: "tlalpan", pob: 690364},
-                 {name: "xochimilco", pob: 510101},
-                 {name: "milpa alta", pob: 165619}
-                ];
-
-
-
-function llamadoACovid(searchVal){
-
-  var URL = "https://datos.cdmx.gob.mx/api/records/1.0/search/?dataset=casos-asociados-a-covid-19"
-  var q = "&q=";
-  var searchValue = searchVal;
-  var queryURL = URL+q+searchValue;
-  
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(response) {
-    console.log(response);
-    console.log(response.nhits);
-    //TIPO PACIENTE para ver si estan en hospital o no
-    //Intubado para cuantos casos criticos
-    //Si queremos refinar una busqueda:
-    //&refine.tipo_paciente=HOSPITALIZADO
-    //Mostrar una imagen O cambiar la letra por algo mas 'grafico'
-    //Rojo ES CUIDADO, Naranja es quedate en casa,Amarillo es precaucion, Verde es bien.
-    
-    //Si nuestro 100% siempre va a ser municipios[index].pob
-    //100*casos_covid/municipios[index].pob
-    
-    ///Porcentaje de peligro
-    //Mostrar el mas peligroso
-    //
-
-
-    //Plus
-    //Si esta en verde, sugerir lugares.
-  
-  });
-}
-
-// for(var delegacion in municipios){
-//   llamadoACovidAmbulatorios(municipios[delegacion].name);
-//   llamadoACovidHosp(municipios[delegacion].name);
-// }
-var hospTotal;
-var ambsTotal;
-
-
-function calculaPorcentaje(poblacion){
-  //por el momento tengo que llamar esta funcion en el segundo llamado.
-  var pobTotDel = poblacion;
-  var porcentaje = ((hospTotal+ambsTotal) * 100) / pobTotDel;
-  console.log("Poblacion es: "+pobTotDel);
-  console.log("hospTotal es: " + hospTotal);
-  console.log("Ambs total es: "+ ambsTotal);
-  //console.log(pobTotDel);
-  return porcentaje;
-  
-}
-
-
-
-function llamadoACovidHosp(searchVal) {
-  try{
-
-    var URL = "https://datos.cdmx.gob.mx/api/records/1.0/search/?dataset=casos-asociados-a-covid-19"
-    var q = "&q=";
-    var searchValue = searchVal;
-    var refine = "&refine.tipo_paciente=HOSPITALIZADO"
-    var queryURL = URL+q+searchValue+refine;
-
-      jQuery.ajax({
-          url:queryURL,
-
-          beforeSend: function(){
-              //before send this method will be called
-          },
-          success: function(data) {
-              //when response recieved then this method will be called.
-          },
-          complete: function(response){
-              //after completed request then this method will be called.
-                    //console.log(response);
-                    $("#casosHospitalizados").text(response.responseJSON.nhits + " Casos Hospitalizados en "+ response.responseJSON.parameters.q);
-                    hospTotal = response.responseJSON.nhits;
-                    for(var delegacion in municipios){
-                        if(municipios[delegacion].name === response.responseJSON.parameters.q){
-                        //console.log("Encontramos la pob");
-                        var percent = calculaPorcentaje(municipios[delegacion].pob);
-                        console.log("Hay un "+percent+"% de ciudadanos que viven en "+municipios[delegacion].name+" contagiados");
-                        }
-
-                    }
-          },
-          error: function(){
-              //when error occurs then this method will be called.
-          }
-      });
-  }catch (e) {
-      alert(e);
+      #panel {
+      height: 100%;
+      width: null;
+      background-color: white;
+      position: fixed;
+      z-index: 1;
+      overflow-x: hidden;
+      transition: all .2s ease-out;
   }
-}
-
-
-
-
-
-function llamadoACovidAmbulatorios(searchVal){
-
-  var URL = "https://datos.cdmx.gob.mx/api/records/1.0/search/?dataset=casos-asociados-a-covid-19"
-  var q = "&q=";
-  var searchValue = searchVal;
-  var refine = "&refine.tipo_paciente=AMBULATORIO"
-  var queryURL = URL+q+searchValue+refine;
-  console.log(searchVal);
   
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(response) {
-    //console.log(response);
-    console.log(response.nhits);
-    $("#casosAmbulatorios").text(response.nhits + " Casos Ambulatorios en "+ response.parameters.q);
-    ambsTotal =  response.nhits;
+  .open {
+      width: 250px;
+  }
   
-  });
-}
+  /* Styling for place details */
+  .hero {
+      width: 100%;
+      height: auto;
+      max-height: 166px;
+      display: block;
+  }
+  
+  .place,
+  p {
+      font-family: 'open sans', arial, sans-serif;
+      padding-left: 18px;
+      padding-right: 18px;
+  }
+  
+  .details {
+      color: darkslategrey;
+  }
+  
+  a {
+      text-decoration: none;
+      color: cadetblue;
+  }
+    </style>
+    <title>Covid Save Searcher</title>
+     <!--Import Google Icon Font-->
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+   
+    <nav>
+        <div class="nav-wrapper">
+          <h5>COVID SAVE SEARCHER </h5>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col s12">
+          <h4>ESTAS EN LA CIUDAD DE MÉXICO, QUIERES SALIR A COMER HOY Y NO SABES CUÁL ES EL RIESGO. <br> NO TE PREOCUPES, NOSOTROS TE AYUDAMOS </h4> 
+          <p>Danos tu alcaldía y código postal, Y te diremos el color de semáforo en tu alcaldía y los restaurantes que se encuentran cerca</p>
+        </div>
+    </div>
+
+    <ul class="collection">
+        <li class="collection-item avatar">
+          <img src="https://www.imagenspng.com.br/wp-content/uploads/2020/05/coronavirus-png-92.png" alt="" class="circle">
+          <span class="title">Tu alcaldía aquí</span>
+          <form action="#">
+            <div class="file-field input-field">
+              <div class="row">
+                  <div class="input-field col s6">
+                    <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+                    <label for="first_name">Alcaldia</label>
+                  </div>
+                  <div class= "col s6">
+                  <button class="btn waves-effect waves-light" type="s" name="">Submit
+                    <i class="material-icons right">send</i>
+                  </button> 
+                  </div>
+            </div>
+          </form> 
+        </li>
+      </ul>
+
+      <div class="row">
+
+        <div class="col s12 m4 l4"> 
+          <h3>CORONAVIRUS SECTION</h3>
+
+        </div>
+  
+        <div class="col s12 m8 l8"> 
+          <h3>MAP SECTION</h3>
+  <!-- The slide-out panel for showing place details -->
+  <div id="panel"></div>
+
+  <!-- Map appears here -->
+  <div class="google-maps">
+    <div id="map"></div>
+  </div>
+       
+        </div>
+  
+      </div>
 
 
 
-function procesarSearch(valorABuscar){
-  llamadoACovidAmbulatorios(valorABuscar);
-  llamadoACovidHosp(valorABuscar);
-}
+  
 
 
-
-
-$("#search-loc").on("click", function(event) {
-  event.preventDefault();
-  var valorABuscar = $("#search-input").val();
-  //console.log(valorABuscar);
-  procesarSearch(valorABuscar.toLowerCase());
-  console.log(valorABuscar);
-});
-
-
-/* =================================================================================== */
-
+<script>
   /* Note: This example requires that you consent to location sharing when
    * prompted by your browser. If you see the error "Geolocation permission
    * denied.", it means you probably did not give permission for the browser * to locate you. */
@@ -356,5 +322,14 @@ $("#search-loc").on("click", function(event) {
     // Open the infoPane
     infoPane.classList.add("open");
   }
+</script>
 
-  initMap()
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGUc4eIT6BoAMJziIv-0cPmrOjofhNYl8&libraries=places&callback=initMap">
+</script>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+            
+
+</html>
