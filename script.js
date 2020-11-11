@@ -53,28 +53,71 @@ function llamadoACovid(searchVal){
   });
 }
 
+// for(var delegacion in municipios){
+//   llamadoACovidAmbulatorios(municipios[delegacion].name);
+//   llamadoACovidHosp(municipios[delegacion].name);
+// }
+var hospTotal;
+var ambsTotal;
 
 
-function llamadoACovidHosp(searchVal){
-
-  var URL = "https://datos.cdmx.gob.mx/api/records/1.0/search/?dataset=casos-asociados-a-covid-19"
-  var q = "&q=";
-  var searchValue = searchVal;
-  var refine = "&refine.tipo_paciente=HOSPITALIZADO"
-  var queryURL = URL+q+searchValue+refine;
-  console.log(queryURL);
+function calculaPorcentaje(poblacion){
+  //por el momento tengo que llamar esta funcion en el segundo llamado.
+  var pobTotDel = poblacion;
+  var porcentaje = ((hospTotal+ambsTotal) * 100) / pobTotDel;
+  console.log("Poblacion es: "+pobTotDel);
+  console.log("hospTotal es: " + hospTotal);
+  console.log("Ambs total es: "+ ambsTotal);
+  //console.log(pobTotDel);
+  return porcentaje;
   
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(response) {
-    console.log(response);
-    console.log(response.nhits);
-    $("#casosHospitalizados").text(response.nhits + " Casos Hospitalizados en "+ response.parameters.q);
-    
-  
-  });
 }
+
+
+
+function llamadoACovidHosp(searchVal) {
+  try{
+
+    var URL = "https://datos.cdmx.gob.mx/api/records/1.0/search/?dataset=casos-asociados-a-covid-19"
+    var q = "&q=";
+    var searchValue = searchVal;
+    var refine = "&refine.tipo_paciente=HOSPITALIZADO"
+    var queryURL = URL+q+searchValue+refine;
+
+      jQuery.ajax({
+          url:queryURL,
+
+          beforeSend: function(){
+              //before send this method will be called
+          },
+          success: function(data) {
+              //when response recieved then this method will be called.
+          },
+          complete: function(response){
+              //after completed request then this method will be called.
+                    //console.log(response);
+                    $("#casosHospitalizados").text(response.responseJSON.nhits + " Casos Hospitalizados en "+ response.responseJSON.parameters.q);
+                    hospTotal = response.responseJSON.nhits;
+                    for(var delegacion in municipios){
+                        if(municipios[delegacion].name === response.responseJSON.parameters.q){
+                        //console.log("Encontramos la pob");
+                        var percent = calculaPorcentaje(municipios[delegacion].pob);
+                        console.log("Hay un "+percent+"% de ciudadanos que viven en "+municipios[delegacion].name+" contagiados");
+                        }
+
+                    }
+          },
+          error: function(){
+              //when error occurs then this method will be called.
+          }
+      });
+  }catch (e) {
+      alert(e);
+  }
+}
+
+
+
 
 
 function llamadoACovidAmbulatorios(searchVal){
@@ -84,27 +127,33 @@ function llamadoACovidAmbulatorios(searchVal){
   var searchValue = searchVal;
   var refine = "&refine.tipo_paciente=AMBULATORIO"
   var queryURL = URL+q+searchValue+refine;
-  console.log(queryURL);
+  console.log(searchVal);
   
   $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function(response) {
-    console.log(response);
+    //console.log(response);
     console.log(response.nhits);
     $("#casosAmbulatorios").text(response.nhits + " Casos Ambulatorios en "+ response.parameters.q);
-   
+    ambsTotal =  response.nhits;
   
   });
 }
 
 
 
+function procesarSearch(valorABuscar){
+  llamadoACovidAmbulatorios(valorABuscar);
+  llamadoACovidHosp(valorABuscar);
+}
+
+
+
+
 $("#search-loc").on("click", function(event) {
   event.preventDefault();
   var valorABuscar = $("#search-input").val();
-  console.log(valorABuscar);
-  //llamadoACovid(valorABuscar);
-  llamadoACovidHosp(valorABuscar);
-  llamadoACovidAmbulatorios(valorABuscar);
+  //console.log(valorABuscar);
+  procesarSearch(valorABuscar.toLowerCase());
 });
