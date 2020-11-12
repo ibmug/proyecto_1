@@ -1,9 +1,31 @@
+
+h4, {
+    font-family: 'Open Sans', sans-serif;
+}
+
+#subheading {
+    font-family: 'Open Sans', sans-serif;
+    color: red;
+}
+
+h6 {
+    font-family: 'Open Sans', sans-serif;
+    color: teal; 
+}
+
+.collection-item {
+    margin: 100px;
+    position: center;
+    padding-left: 100px;
+}
+
 .nav-wrapper {
     padding-top: 10px;
     padding-left: 15px;
     padding-bottom: 20px;
     color:whitesmoke;
     font-weight: bold;
+    font-style: italic;
   }
 
 .google-maps {
