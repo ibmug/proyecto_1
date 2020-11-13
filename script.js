@@ -63,6 +63,7 @@ var ambsTotal;
 
 function calculaPorcentaje(poblacion){
   //por el momento tengo que llamar esta funcion en el segundo llamado.
+  //Puede que el porcentaje sea ambulatorio ya que tomamos valores pronosticados...
   var pobTotDel = poblacion;
   var porcentaje = ((hospTotal+ambsTotal) * 100) / pobTotDel;
   console.log("Poblacion es: "+pobTotDel);
@@ -119,6 +120,45 @@ function llamadoACovidHosp(searchVal) {
 
 
 
+function llamadoACovidAmbsBeta(searchVal) {
+  try{
+
+    var URL = "https://datos.cdmx.gob.mx/api/records/1.0/search/?dataset=casos-asociados-a-covid-19"
+    var q = "&q=";
+    var searchValue = searchVal;
+    var refine = "&refine.tipo_paciente=AMBULATORIO"
+    var queryURL = URL+q+searchValue+refine;
+
+      jQuery.ajax({
+          url:queryURL,
+
+          beforeSend: function(){
+              //before send this method will be called
+          },
+          success: function(data) {
+              //when response recieved then this method will be called.
+          },
+          complete: function(response){
+              //after completed request then this method will be called.
+                    //console.log(response);
+                    $("#casosAmbulatorios").text(response.responseJSON.nhits + " Casos Ambulatorios en "+ response.responseJSON.parameters.q);
+                    ambsTotal = response.responseJSON.nhits;
+
+                    //La llamo una vez que completamos este llamado para asegurarnos que el procentaje salga bien
+                    llamadoACovidHosp(searchValue);
+          },
+          error: function(){
+              //when error occurs then this method will be called.
+          }
+      });
+  }catch (e) {
+      alert(e);
+  }
+}
+
+
+
+
 
 function llamadoACovidAmbulatorios(searchVal){
 
@@ -144,8 +184,8 @@ function llamadoACovidAmbulatorios(searchVal){
 
 
 function procesarSearch(valorABuscar){
-  llamadoACovidAmbulatorios(valorABuscar);
-  llamadoACovidHosp(valorABuscar);
+  llamadoACovidAmbsBeta(valorABuscar);
+  //llamadoACovidHosp(valorABuscar);
 }
 
 
