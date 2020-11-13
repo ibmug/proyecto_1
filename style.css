@@ -18,14 +18,7 @@ body{
         color:#004d40;•
     
     }
-    
-    .nav-wrapper {
-        padding-top: 10px;
-        padding-left: 15px;
-        padding-bottom: 20px;
-        color:whitesmoke;
-        font-weight: bold;
-      }
+
     
     .google-maps {
         position: relative;
@@ -42,7 +35,7 @@ body{
         background-color: grey;    
         }
     
-          #panel {
+          /* #panel {
           height: 100%;
           width: null;
           background-color: white;
@@ -50,7 +43,7 @@ body{
           z-index: 1;
           overflow-x: hidden;
           transition: all .2s ease-out;
-      }
+      } */
       
       .open {
           width: 250px;
