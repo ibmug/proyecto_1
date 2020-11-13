@@ -1,60 +1,82 @@
-.nav-wrapper {
-    padding-top: 10px;
-    padding-left: 15px;
-    padding-bottom: 20px;
-    color:whitesmoke;
-    font-weight: bold;
-  }
-
-.google-maps {
-    position: relative;
-    padding-bottom: 50%;  /* This is the aspect ratio */
-    height: 0;
-    overflow: hidden;
+body{
+    background-color: #e0f2f1;
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
     }
-    #map {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100% !important;
-    height: 100% !important;
-    background-color: grey;    
+      
+    main {
+        flex: 1 0 auto;
+      }
+    
+    .jumbotron{
+        background-image: url(https://www.pharmaceutical-technology.com/wp-content/uploads/sites/10/2020/04/Malaysia_559007341-e1599478831476.jpg);
+        color: white;
+        text-align: center;
     }
-
-      #panel {
-      height: 100%;
-      width: null;
-      background-color: white;
-      position: fixed;
-      z-index: 1;
-      overflow-x: hidden;
-      transition: all .2s ease-out;
-  }
-  
-  .open {
-      width: 250px;
-  }
-  
-  /* Styling for place details */
-  .hero {
-      width: 100%;
-      height: auto;
-      max-height: 166px;
-      display: block;
-  }
-  
-  .place,
-  p {
-      font-family: 'open sans', arial, sans-serif;
-      padding-left: 18px;
-      padding-right: 18px;
-  }
-  
-  .details {
-      color: darkslategrey;
-  }
-  
-  a {
-      text-decoration: none;
-      color: cadetblue;
-  }
+    .prph{
+        color:#004d40;•
+    
+    }
+    
+    .nav-wrapper {
+        padding-top: 10px;
+        padding-left: 15px;
+        padding-bottom: 20px;
+        color:whitesmoke;
+        font-weight: bold;
+      }
+    
+    .google-maps {
+        position: relative;
+        padding-bottom: 50%;  /* This is the aspect ratio */
+        height: 0;
+        overflow: hidden;
+        }
+        #map {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
+        background-color: grey;    
+        }
+    
+          #panel {
+          height: 100%;
+          width: null;
+          background-color: white;
+          position: fixed;
+          z-index: 1;
+          overflow-x: hidden;
+          transition: all .2s ease-out;
+      }
+      
+      .open {
+          width: 250px;
+      }
+      
+      /* Styling for place details */
+      .hero {
+          width: 100%;
+          height: auto;
+          max-height: 166px;
+          display: block;
+      }
+      
+      .place,
+      p {
+          font-family: 'open sans', arial, sans-serif;
+          padding-left: 18px;
+          padding-right: 18px;
+      }
+      
+      .details {
+          color: darkslategrey;
+      }
+      
+      a {
+          text-decoration: none;
+          color: cadetblue;
+      }
+    

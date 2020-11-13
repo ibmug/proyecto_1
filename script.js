@@ -357,4 +357,4 @@ $("#search-loc").on("click", function(event) {
     infoPane.classList.add("open");
   }
 
-  initMap()
+/*   initMap() */
