@@ -1,20 +1,22 @@
 
-var municipios = [{name:"benito juarez", pob:317999},
-                 {name:"cuauhtemoc", pob: 415379},
-                 {name:"miguel hidalgo", pob:302489},
-                 {name:"venustiano carranza", pob: 370844},
-                 {name:"alvaro obregon", pob:724491},
-                 {name:"azcapotzalco", pob:376071},
-                 {name:"coyoacan", pob: 575878},
-                 {name: "cuajimalpa", pob: 214710},
-                 {name:"gustavo a madero", pob: 1133065},
-                 {name: "iztacalco", pob: 374476},
-                 {name: "iztapalapa", pob: 2107798},
-                 {name: "magdalena contreras", pob: 259934},
-                 {name: "tlahuac", pob: 481680},
-                 {name: "tlalpan", pob: 690364},
-                 {name: "xochimilco", pob: 510101},
-                 {name: "milpa alta", pob: 165619}
+var municipios = [{name:"benito juarez", pob:317999, lat:19.383033, lng:-99.141209},
+                  {name:"cuauhtemoc", pob: 415379, lat: 19.430408, lng: -99.138814},
+                  {name:"miguel hidalgo", pob:302489, lat: 19.432287, lng: -99.203334},
+                  {name:"venustiano carranza", pob: 370844, lat: 19.431624, lng: -99.094563},
+                  {name:"alvaro obregon", pob:724491, lat: 19.343282, lng: -99.244855},
+
+                  {name:"azcapotzalco", pob:376071, lat:19.483713, lng:-99.183447},
+                  {name:"coyoacan", pob: 575878, lat:19.321882, lng:-99.149153},
+                  {name: "cuajimalpa", pob: 214710, lat:19.342667, lng:-99.303430},
+                  {name:"gustavo a madero", pob: 1133065, lat:19.484372, lng:-99.071273},
+                  {name: "iztacalco", pob: 374476, lat:19.391440, lng:-99.100328},
+
+                 {name: "iztapalapa", pob: 2107798, lat:19.354444, lng:-99.055675},
+                 {name: "magdalena contreras", pob: 259934, lat:19.316441, lng:-99.242349},
+                 {name: "tlahuac", pob: 481680, lat:19.294835, lng:-99.019282},
+                 {name: "tlalpan", pob: 690364, lat: 19.281258, lng:-99.197996},
+                 {name: "xochimilco", pob: 510101, lat:19.250874, lng:-99.096806},
+                 {name: "milpa alta", pob: 165619, lat:19.192947, lng:-99.023634}
                 ];
 
 
@@ -104,6 +106,7 @@ function llamadoACovidHosp(searchVal) {
                         //console.log("Encontramos la pob");
                         var percent = calculaPorcentaje(municipios[delegacion].pob);
                         console.log("Hay un "+percent+"% de ciudadanos que viven en "+municipios[delegacion].name+" contagiados");
+                        setMapSearch(municipios[delegacion]);
                         }
 
                     }
@@ -146,6 +149,7 @@ function llamadoACovidAmbsBeta(searchVal) {
 
                     //La llamo una vez que completamos este llamado para asegurarnos que el procentaje salga bien
                     llamadoACovidHosp(searchValue);
+                    
           },
           error: function(){
               //when error occurs then this method will be called.
@@ -205,53 +209,106 @@ $("#search-loc").on("click", function(event) {
   /* Note: This example requires that you consent to location sharing when
    * prompted by your browser. If you see the error "Geolocation permission
    * denied.", it means you probably did not give permission for the browser * to locate you. */
-  let pos;
-  let map;
-  let bounds;
-  let infoWindow;
-  let currentInfoWindow;
-  let service;
-  let infoPane;
-  function initMap() {
-    // Initialize variables
-    bounds = new google.maps.LatLngBounds();
-    infoWindow = new google.maps.InfoWindow;
-    currentInfoWindow = infoWindow;
-    /* Add a generic sidebar */
-    infoPane = document.getElementById('panel');
+  
 
-    // Try HTML5 geolocation
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        console.log(pos);
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: pos,
-          zoom: 15
+    let pos;
+    let map;
+    let bounds;
+    let infoWindow;
+    let currentInfoWindow;
+    let service;
+    let infoPane;
+
+
+
+    function initMap() {
+      // Initialize variables
+      bounds = new google.maps.LatLngBounds();
+      infoWindow = new google.maps.InfoWindow;
+      currentInfoWindow = infoWindow;
+      /* Add a generic sidebar */
+      infoPane = document.getElementById('panel');
+  
+      // Try HTML5 geolocation
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          console.log(pos);
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: pos,
+            zoom: 15
+          });
+          console.log(map);
+          bounds.extend(pos);
+  
+          infoWindow.setPosition(pos);
+          infoWindow.setContent('Location found.');
+          infoWindow.open(map);
+          map.setCenter(pos);
+  
+          // Call Places Nearby Search on user's location
+          getNearbyPlaces(pos);
+        }, () => {
+          // Browser supports geolocation, but user has denied permission
+          handleLocationError(true, infoWindow);
         });
-        console.log(map);
-        bounds.extend(pos);
-
-        infoWindow.setPosition(pos);
-        infoWindow.setContent('Location found.');
-        infoWindow.open(map);
-        map.setCenter(pos);
-
-        // Call Places Nearby Search on user's location
-        getNearbyPlaces(pos);
-      }, () => {
-        // Browser supports geolocation, but user has denied permission
-        handleLocationError(true, infoWindow);
-      });
-    } else {
-      // Browser doesn't support geolocation
-      handleLocationError(false, infoWindow);
+      } else {
+        // Browser doesn't support geolocation
+        handleLocationError(false, infoWindow);
+      }
     }
-  }
 
+
+
+
+
+    function setMapSearch(delegacion) {
+      // Initialize variables
+      bounds = new google.maps.LatLngBounds();
+      infoWindow = new google.maps.InfoWindow;
+      currentInfoWindow = infoWindow;
+      /* Add a generic sidebar */
+      infoPane = document.getElementById('panel');
+  
+  
+      pos = {
+        // lat: 19.316441,
+        // lng: -99.242349
+        lat: delegacion.lat,
+        lng: delegacion.lng
+      };
+      console.log(pos);
+    
+      //get pos and set map
+      if (pos) {
+          console.log(pos);
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: pos,
+            zoom: 15
+          });
+
+
+          console.log(map);
+          bounds.extend(pos);
+  
+          infoWindow.setPosition(pos);
+          infoWindow.setContent('Location found.');
+          infoWindow.open(map);
+          map.setCenter(pos);
+  
+          // Call Places Nearby Search on user's location
+          getNearbyPlaces(pos);
+        }else{
+          //We couldnt get pos.
+          handleLocationError(true, infoWindow);
+        }
+    }
+  
+
+ 
   // Handle a geolocation error
   function handleLocationError(browserHasGeolocation, infoWindow) {
     // Set default location to Sydney, Australia
@@ -260,6 +317,8 @@ $("#search-loc").on("click", function(event) {
       center: pos,
       zoom: 15
     });
+
+    console.log(pos);
 
     // Display an InfoWindow at the map center
     infoWindow.setPosition(pos);
@@ -347,6 +406,8 @@ $("#search-loc").on("click", function(event) {
   /* Load place details in a sidebar */
   // Displays place details in a sidebar
   function showPanel(placeResult) {
+    
+    console.log(placeResult);
     // If infoPane is already open, close it
     if (infoPane.classList.contains("open")) {
       infoPane.classList.remove("open");

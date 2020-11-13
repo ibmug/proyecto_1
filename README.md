@@ -7,6 +7,11 @@ El 2020 no le cayo bien a nadie y sabemos que muchas personas no podemos quedarn
 Una herramienta que estamos utilizando con los datos que brinda el gobierno mexicano es tomar la cantidad de casos que se han reportado en la 'Alcaldia/Delegacion'
 Con los estimados que tiene el inegi mostramos un porcentaje para que tengan mas 'precaucion' en algunas zonas que otras.
 
+# Features
+Te da la ubicacion del usuario
+Busca la delegacion en el mapa
+Te brinda un porcentaje de personas contagiadas en el municipio.
+
 
 # Viendo a Futuro
 
