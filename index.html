@@ -24,46 +24,56 @@
 <div class="row container">
   <div class="col s12">
     <h5 class="prph">QUIERES SALIR A COMER HOY Y NO SABES CUÁL ES EL RIESGO. <br> NO TE PREOCUPES, NOSOTROS TE AYUDAMOS </h4> 
-    <p class="teal lighten-4 prph">Danos la alcaldía, te diremos el color de semáforo y los restaurantes que se encuentran cerca de tu ubicación</p>
+    <p class="teal lighten-4 prph">Te mostramos los restaurantes cerca de tu ubicación. Después introduce la alcaldía, que quieras visitar, te diremos el color de semáforo y los restaurantes en la alcaldia</p>
   </div>
 </div>
-
-<div class="collection" id="search-form">
+<div class="covidColor">
+<div class="collection" id="search-form" >
   <div class="collection-item avatar">
     <img src="https://www.imagenspng.com.br/wp-content/uploads/2020/05/coronavirus-png-92.png" alt="" class="circle">
     <span class="title">Alcaldía aquí</span>
      <!-- <form action="#">  -->
-      <div class="file-field input-field">
+      <div class="file-field input-field covidColor">
         <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s4">
               <input placeholder="" id="search-input" type="text" class="validate">
               <label for="search-input"></label>
+              <button id="search-loc" class="btn waves-effect waves-light" type="s" name="Buscar.." >Submit
+                <i class="material-icons right">send</i>
+              </button> 
             </div>
-            <div class= "col s6">
-            <button id="search-loc" class="btn waves-effect waves-light" type="s" name="Buscar.." >Submit
-              <i class="material-icons right">send</i>
-            </button> 
+
+            <div class= "col s4 prph">
+              <div id="casos_container">
+                <div id="casosHospitalizados">Casos Hospitalizados</div>
+                <br>
+                <div id="casosAmbulatorios">Casos Ambulatorios</div>
+                <p class="prctg-covid"></p>
+              </div>
             </div>
-      </div>
+            <div class= "col s4 prph">
+              <div class="collection-item avatar">
+                <img src="" id="img_container" alt="" class="responsive-img">
+              </div>        
+             </div>
     <!-- </form> -->
   </div>
+</div>
+</div>
+</div>
 </div>
     
     <div class="row">
 
       <div class="col s12 m4 l4 prph"> 
-        <h3>CORONAVIRUS SECTION</h3>
+        <h4>RESTAURANTES SUGERIDOS</h4>
 
-        <div id="casos_container">
-          <div id="casosHospitalizados">Casos Hospitalizados</div>
-          <div id="casosAmbulatorios">Casos Ambulatorios</div>
-        </div>
          <!-- The slide-out panel for showing place details -->
          <div id="panel"></div>
       </div>
 
       <div class="col s12 m8 l8"> 
-        <h3 class="prph">MAP SECTION</h3>
+        <h3 class="prph">MAPA DE LUGARES</h3>
           <!-- Map appears here -->
          <div class="google-maps">
          <div id="map"></div>
