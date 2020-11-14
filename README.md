@@ -49,9 +49,9 @@ información general para conocer el grado de "precaución" de cada zona.
    de casos hospitalizados de esa misma área.
 ​
    Verde    --> menor o igual a 1%. 
-   Amarillo --> entre 2% e igual o menor a 4%.
-   Naranja  --> entre 2% e igual o menor a 4%. 
-   Rojo     --> mayor o igual al 5%.
+   Amarillo --> entre 2% o igual  4%.
+   Naranja  --> entre 4% o igual a 5%. 
+   Rojo     --> mayor o igual al 6%.
 ​
 7. La localización del mapa y la información de los restaurantes cambia en base
    a la búsqueda del usuario.
@@ -157,9 +157,9 @@ of risk and "precaution" needed in each area.
    infected population.
 ​
    Green    --> below or equal to 1%. 
-   Yellow   --> between 2% and less/equal to 4%.
-   Orange   --> between 2% and less/equal to 4%. 
-   Red      --> over or equal to 5%.
+   Yellow   --> between 2% or between/equal to 4%.
+   Orange   --> between 4% or equal to 5%. 
+   Red      --> over or equal to 6%.
 ​
 7. The map location and restaurant info change based on user's search.
 ​

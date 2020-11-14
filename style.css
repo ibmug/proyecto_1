@@ -32,6 +32,13 @@ body{
 
     .red{
         background-color: rgb(245, 65, 41);
+        color:white;
+    }
+
+
+    #casos_container{
+        margin-top:25px;
+        color:white;
     }
 
     .google-maps {

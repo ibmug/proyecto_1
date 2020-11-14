@@ -55,10 +55,7 @@ function llamadoACovid(searchVal){
   });
 }
 
-// for(var delegacion in municipios){
-//   llamadoACovidAmbulatorios(municipios[delegacion].name);
-//   llamadoACovidHosp(municipios[delegacion].name);
-// }
+
 var hospTotal;
 var ambsTotal;
 
@@ -68,9 +65,6 @@ function calculaPorcentaje(poblacion){
   //Puede que el porcentaje sea ambulatorio ya que tomamos valores pronosticados...
   var pobTotDel = poblacion;
   var porcentaje = ((hospTotal+ambsTotal) * 100) / pobTotDel;
-  console.log("Poblacion es: "+pobTotDel);
-  console.log("hospTotal es: " + hospTotal);
-  console.log("Ambs total es: "+ ambsTotal);
   //console.log(pobTotDel);
   return porcentaje;
   
@@ -100,16 +94,16 @@ function llamadoACovidHosp(searchVal) {
           },
           complete: function(response){
               //after completed request then this method will be called.
-                    //console.log(response);
+                    
                     $("#casosHospitalizados").text(response.responseJSON.nhits + " Casos Hospitalizados en "+ response.responseJSON.parameters.q);
                     hospTotal = response.responseJSON.nhits;
                     for(var delegacion in municipios){
                         if(municipios[delegacion].name === response.responseJSON.parameters.q){
-                        //console.log("Encontramos la pob");
+                        
                         var percent = calculaPorcentaje(municipios[delegacion].pob);
                         console.log("Hay un " +percent+ " % de ciudadanos que viven en "+ municipios[delegacion].name+" % contagiados");
-                        $("#poblacionDeleg").text("La poblacion estimada por el inegi de " + municipios[delegacion].name+ " para el 2020 es de " + municipios[delegacion].pob);
-                        $("#porcentajeCasos").text("Con estos numeros podemos estimar que un "+ percent+"% que viven en "+municipios[delegacion].name+" estan contagiados");
+                        $("#poblacionDeleg").text("La población estimada por el inegi de " + municipios[delegacion].name+ " para el 2020 es de " + municipios[delegacion].pob);
+                        $("#prctg-covid").text("Con estos números podemos estimar que un "+ percent.toFixed(3)+"% que viven en "+municipios[delegacion].name+" estan contagiados");
                        setBannerColor(percent); 
 
                         setMapSearch(municipios[delegacion]);
@@ -126,27 +120,32 @@ function llamadoACovidHosp(searchVal) {
 }
 
 function setBannerColor(percent){
-  percentImg =  Math.ceil(percent)
+  //percentImg =  Math.ceil(percent)
+  percentImg = percent;
                        console.log(percentImg)
 
                         if (percentImg >=0 && percentImg <=1.0) {
                           $(".covidColor").removeClass("yellow orange red").addClass("green") &&
                             $("#img_container").attr("src","Assets/verde.jpeg")
+                            $("#casos_container").css('color','black');
                           }
-                          else if (percentImg >=2.0 && percentImg <=4.0) {
+                          else if (percentImg >1.0 && percentImg < 3) {
                             $(".covidColor").removeClass("green orange red").addClass("yellow") &&
-                             // $(".prctg-covid").text("Actualmente el semáforo se encuentra en Amarillo, hay: " + percentImg + " % contagiados") &&
+                             
                               $("#img_container").attr("src","Assets/amarillo.jpeg")
+                              $("#casos_container").css('color','black');
                           }
-                          else if (percentImg >=4.0 && percentImg<=5.0) {
+                          else if (percentImg >= 3  && percentImg <=5) {
                             $(".covidColor").removeClass("green yellow red").addClass("orange") &&
-                             // $(".prctg-covid").text("Actualmente el semáforo se encuentra en Naranja, hay: " + percentImg + " % contagiados") &&
+                             
                               $("#img_container").attr("src","Assets/naranja.jpeg")
+                              $("#casos_container").css('color','black');
                           } 
-                          else if(percentImg >=5.0 && percentImg <=100.0) {
+                          else if(percentImg > 5 && percentImg <=100.0) {
                             $(".covidColor").removeClass("green yellow orange").addClass("red") &&
-                             // $(".prctg-covid").text("Actualmente el semáforo se encuentra en Rojo, hay: " + percentImg + " % contagiados") &&
+                             
                               $("#img_container").attr("src","Assets/rojo.jpeg")
+                              $("#casos_container").css('color','white');
                           }
 }
 
@@ -206,8 +205,8 @@ function llamadoACovidAmbulatorios(searchVal){
     url: queryURL,
     method: "GET"
   }).then(function(response) {
-    //console.log(response);
-    console.log(response.nhits);
+    
+    
     $("#casosAmbulatorios").text(response.nhits + " Casos Ambulatorios en "+ response.parameters.q);
     ambsTotal =  response.nhits;
   
@@ -218,7 +217,6 @@ function llamadoACovidAmbulatorios(searchVal){
 
 function procesarSearch(valorABuscar){
   llamadoACovidAmbsBeta(valorABuscar);
-  //llamadoACovidHosp(valorABuscar);
 }
 
 
@@ -226,10 +224,11 @@ function procesarSearch(valorABuscar){
 
 $("#search-loc").on("click", function(event) {
   event.preventDefault();
+  
   var valorABuscar = $("#search-input").val();
-  //console.log(valorABuscar);
-  procesarSearch(valorABuscar.toLowerCase());
-  console.log(valorABuscar);
+  if (valorABuscar){
+    procesarSearch(valorABuscar.toLowerCase());
+  }
 });
 
 
@@ -266,12 +265,12 @@ $("#search-loc").on("click", function(event) {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-          console.log(pos);
+          
           map = new google.maps.Map(document.getElementById('map'), {
             center: pos,
             zoom: 15
           });
-          console.log(map);
+          
           bounds.extend(pos);
   
           infoWindow.setPosition(pos);
@@ -424,6 +423,7 @@ $("#search-loc").on("click", function(event) {
       if (placeResult.rating) rating = placeResult.rating;
       placeInfowindow.setContent('<div><strong>' + placeResult.name +
         '</strong><br>' + 'Rating: ' + rating + '</div>');
+       
       placeInfowindow.open(marker.map, marker);
       currentInfoWindow.close();
       currentInfoWindow = placeInfowindow;
@@ -458,11 +458,22 @@ $("#search-loc").on("click", function(event) {
       infoPane.appendChild(photo);
     }
 
-    // Add place details with text formatting
-    let name = document.createElement('h1');
-    name.classList.add('place');
-    name.textContent = placeResult.name;
-    infoPane.appendChild(name);
+    if(placeResult.website){
+      // Add place details with text formatting
+      let name = document.createElement('a');
+      name.classList.add('place');
+      name.textContent = placeResult.name;
+      name.setAttribute('href', placeResult.website);
+      name.setAttribute('target','_blank')
+      infoPane.appendChild(name);
+      
+    }else {
+      let name = document.createElement('h1');
+      name.classList.add('place');
+      name.textContent = placeResult.name;
+      infoPane.appendChild(name);
+    }
+    
     if (placeResult.rating) {
       let rating = document.createElement('p');
       rating.classList.add('details');
@@ -473,19 +484,18 @@ $("#search-loc").on("click", function(event) {
     address.classList.add('details');
     address.textContent = placeResult.formatted_address;
     infoPane.appendChild(address);
-    if (placeResult.website) {
-      let websitePara = document.createElement('p');
-      let websiteLink = document.createElement('a');
-      let websiteUrl = document.createTextNode(placeResult.website);
-      websiteLink.appendChild(websiteUrl);
-      websiteLink.title = placeResult.website;
-      websiteLink.href = placeResult.website;
-      websitePara.appendChild(websiteLink);
-      infoPane.appendChild(websitePara);
-    }
+    // if (placeResult.website) {
+    //   let websitePara = document.createElement('p');
+    //   let websiteLink = document.createElement('a');
+    //   let websiteUrl = document.createTextNode(placeResult.website);
+    //   websiteLink.appendChild(websiteUrl);
+    //   websiteLink.title = placeResult.website;
+    //   websiteLink.href = placeResult.website;
+    //   websitePara.appendChild(websiteLink);
+    //   infoPane.appendChild(websitePara);
+    // }
 
     // Open the infoPane
     infoPane.classList.add("open");
   }
 
-/*   initMap() */
