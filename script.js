@@ -105,6 +105,8 @@ function llamadoACovidHosp(searchVal) {
                         if(municipios[delegacion].name === response.responseJSON.parameters.q){
                         //console.log("Encontramos la pob");
                         var percent = calculaPorcentaje(municipios[delegacion].pob);
+                        $("#poblacionDeleg").text("La poblacion estimada por el inegi de " + municipios[delegacion].name+ " para el 2020 es de " + municipios[delegacion].pob);
+                        $("#porcentajeCasos").text("Con estos numeros podemos estimar que un "+ percent+"% que viven en "+municipios[delegacion].name+" estan contagiados");
                         console.log("Hay un "+percent+"% de ciudadanos que viven en "+municipios[delegacion].name+" contagiados");
                         setMapSearch(municipios[delegacion]);
                         }
