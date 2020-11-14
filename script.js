@@ -126,7 +126,7 @@ function llamadoACovidHosp(searchVal) {
                               $(".prctg-covid").text("Actualmente el semáforo se encuentra en Amarillo, hay: " + percentImg + " % contagiados") &&
                               $("#img_container").attr("src","Assets/amarillo.jpeg")
                           }
-                          else if (percentImg >=2.0 && percentImg<=4.0) {
+                          else if (percentImg >=4.0 && percentImg<=5.0) {
                             $(".covidColor").removeClass("green yellow red").addClass("orange") &&
                               $(".prctg-covid").text("Actualmente el semáforo se encuentra en Naranja, hay: " + percentImg + " % contagiados") &&
                               $("#img_container").attr("src","Assets/naranja.jpeg")
