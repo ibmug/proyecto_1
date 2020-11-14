@@ -15,11 +15,30 @@ body{
         text-align: center;
     }
     .prph{
-        color:#004d40;•
+        color:#004d40;
     
     }
 
+/*     .covidColor{
+        background-color: skyblue
+    } */
+
+    .green{
+        background-color: rgb(33, 244, 138);
+    }
+
+    .yellow{
+        background-color: rgb(246, 249, 88);
+    }
     
+    .orange{
+        background-color: rgb(252, 163, 55);
+    }
+
+    .red{
+        background-color: rgb(245, 65, 41);
+    }
+
     .google-maps {
         position: relative;
         padding-bottom: 50%;  /* This is the aspect ratio */
@@ -46,7 +65,7 @@ body{
       } */
       
       .open {
-          width: 250px;
+          width: 180px;
       }
       
       /* Styling for place details */
@@ -60,6 +79,7 @@ body{
       .place,
       p {
           font-family: 'open sans', arial, sans-serif;
+          font-size: 20px;
           padding-left: 18px;
           padding-right: 18px;
       }

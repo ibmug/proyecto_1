@@ -78,6 +78,8 @@ function calculaPorcentaje(poblacion){
 
 
 
+
+
 function llamadoACovidHosp(searchVal) {
   try{
 
@@ -105,10 +107,37 @@ function llamadoACovidHosp(searchVal) {
                         if(municipios[delegacion].name === response.responseJSON.parameters.q){
                         //console.log("Encontramos la pob");
                         var percent = calculaPorcentaje(municipios[delegacion].pob);
-                        console.log("Hay un "+percent+"% de ciudadanos que viven en "+municipios[delegacion].name+" contagiados");
+                        console.log("Hay un " +percent+ " % de ciudadanos que viven en "+ municipios[delegacion].name+" % contagiados");
                         setMapSearch(municipios[delegacion]);
-                        }
 
+                       percentImg =  Math.ceil(percent)
+                       console.log(percentImg)
+
+                        if (percentImg >=0 && percentImg <=1.0) {
+                          $(".covidColor").removeClass("yellow orange red").addClass("green") &&
+                          
+                         /*  .appendChild(
+                            $("<p>").text("Actualmente el semáforo se encuentra en Verde, hay: " + percent.Img + " contagiados") */
+                          
+                            $("#img_container").attr("src","Assets/verde.jpeg")
+                          }
+                          else if (percentImg >=2.0 && percentImg <=4.0) {
+                            $(".covidColor").removeClass("green orange red").addClass("yellow") &&
+                              $(".prctg-covid").text("Actualmente el semáforo se encuentra en Amarillo, hay: " + percentImg + " % contagiados") &&
+                              $("#img_container").attr("src","Assets/amarillo.jpeg")
+                          }
+                          else if (percentImg >=4.0 && percentImg<=5.0) {
+                            $(".covidColor").removeClass("green yellow red").addClass("orange") &&
+                              $(".prctg-covid").text("Actualmente el semáforo se encuentra en Naranja, hay: " + percentImg + " % contagiados") &&
+                              $("#img_container").attr("src","Assets/naranja.jpeg")
+                          } 
+                          else if(percentImg >=5.0 && percentImg <=100.0) {
+                            $(".covidColor").removeClass("green yellow orange").addClass("red") &&
+                              $(".prctg-covid").text("Actualmente el semáforo se encuentra en Rojo, hay: " + percentImg + " % contagiados") &&
+                              $("#img_container").attr("src","Assets/rojo.jpeg")
+                          }
+
+                        }
                     }
           },
           error: function(){
@@ -119,7 +148,6 @@ function llamadoACovidHosp(searchVal) {
       alert(e);
   }
 }
-
 
 
 
@@ -202,6 +230,7 @@ $("#search-loc").on("click", function(event) {
   procesarSearch(valorABuscar.toLowerCase());
   console.log(valorABuscar);
 });
+
 
 
 /* =================================================================================== */
