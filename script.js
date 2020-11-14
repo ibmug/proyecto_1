@@ -108,35 +108,11 @@ function llamadoACovidHosp(searchVal) {
                         //console.log("Encontramos la pob");
                         var percent = calculaPorcentaje(municipios[delegacion].pob);
                         console.log("Hay un " +percent+ " % de ciudadanos que viven en "+ municipios[delegacion].name+" % contagiados");
+                        $("#poblacionDeleg").text("La poblacion estimada por el inegi de " + municipios[delegacion].name+ " para el 2020 es de " + municipios[delegacion].pob);
+                        $("#porcentajeCasos").text("Con estos numeros podemos estimar que un "+ percent+"% que viven en "+municipios[delegacion].name+" estan contagiados");
+                       setBannerColor(percent); 
+
                         setMapSearch(municipios[delegacion]);
-
-                       percentImg =  Math.ceil(percent)
-                       console.log(percentImg)
-
-                        if (percentImg >=0 && percentImg <=1.0) {
-                          $(".covidColor").removeClass("yellow orange red").addClass("green") &&
-                          
-                         /*  .appendChild(
-                            $("<p>").text("Actualmente el semáforo se encuentra en Verde, hay: " + percent.Img + " contagiados") */
-                          
-                            $("#img_container").attr("src","Assets/verde.jpeg")
-                          }
-                          else if (percentImg >=2.0 && percentImg <=4.0) {
-                            $(".covidColor").removeClass("green orange red").addClass("yellow") &&
-                              $(".prctg-covid").text("Actualmente el semáforo se encuentra en Amarillo, hay: " + percentImg + " % contagiados") &&
-                              $("#img_container").attr("src","Assets/amarillo.jpeg")
-                          }
-                          else if (percentImg >=4.0 && percentImg<=5.0) {
-                            $(".covidColor").removeClass("green yellow red").addClass("orange") &&
-                              $(".prctg-covid").text("Actualmente el semáforo se encuentra en Naranja, hay: " + percentImg + " % contagiados") &&
-                              $("#img_container").attr("src","Assets/naranja.jpeg")
-                          } 
-                          else if(percentImg >=5.0 && percentImg <=100.0) {
-                            $(".covidColor").removeClass("green yellow orange").addClass("red") &&
-                              $(".prctg-covid").text("Actualmente el semáforo se encuentra en Rojo, hay: " + percentImg + " % contagiados") &&
-                              $("#img_container").attr("src","Assets/rojo.jpeg")
-                          }
-
                         }
                     }
           },
@@ -147,6 +123,31 @@ function llamadoACovidHosp(searchVal) {
   }catch (e) {
       alert(e);
   }
+}
+
+function setBannerColor(percent){
+  percentImg =  Math.ceil(percent)
+                       console.log(percentImg)
+
+                        if (percentImg >=0 && percentImg <=1.0) {
+                          $(".covidColor").removeClass("yellow orange red").addClass("green") &&
+                            $("#img_container").attr("src","Assets/verde.jpeg")
+                          }
+                          else if (percentImg >=2.0 && percentImg <=4.0) {
+                            $(".covidColor").removeClass("green orange red").addClass("yellow") &&
+                             // $(".prctg-covid").text("Actualmente el semáforo se encuentra en Amarillo, hay: " + percentImg + " % contagiados") &&
+                              $("#img_container").attr("src","Assets/amarillo.jpeg")
+                          }
+                          else if (percentImg >=4.0 && percentImg<=5.0) {
+                            $(".covidColor").removeClass("green yellow red").addClass("orange") &&
+                             // $(".prctg-covid").text("Actualmente el semáforo se encuentra en Naranja, hay: " + percentImg + " % contagiados") &&
+                              $("#img_container").attr("src","Assets/naranja.jpeg")
+                          } 
+                          else if(percentImg >=5.0 && percentImg <=100.0) {
+                            $(".covidColor").removeClass("green yellow orange").addClass("red") &&
+                             // $(".prctg-covid").text("Actualmente el semáforo se encuentra en Rojo, hay: " + percentImg + " % contagiados") &&
+                              $("#img_container").attr("src","Assets/rojo.jpeg")
+                          }
 }
 
 
