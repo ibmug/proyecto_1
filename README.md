@@ -1,4 +1,4 @@
-# COVID SAFE PLACES SEARCHER
+# MEDIDOR DE COVID-19 POR AlCALDÍA
 ​
 Primer proyecto grupal para el Full-Stack Web Development Programming Bootcamp
 en el Tecnológico de Monterrey (Noviembre 2020)
@@ -21,7 +21,7 @@ una decisión (visitar o no un restaurante) en base al nivel de riesgo/alerta de
 esa área. En otras palabras, ¿cómo saber el número de contagios registrados
 respecto a tu posición actual?
 ​
-**Covid Safe Places Searcher** es una herramienta que toma la cantidad de
+**El medidor de Covid por alcaldía** es una herramienta que toma la cantidad de
 contagios y personas hospitalizadas por COVID-19 que el gobierno mexicano ha
 reportado en cada "alcaldía/delegación" de la CDMX. Al obtener estos datos, la
 aplicación crea un porcentaje estimado que el usuario puede utilizar como
@@ -108,7 +108,7 @@ Mario N. Castro
 ​
 # ENGLISH VERSION
 ​
-# COVID SAFE PLACES SEARCHER
+# MEXICO CITY'S COVID SAFE PLACES SEARCHER (BY MUNICIPALITIES)
 ​
 First coding group proyect for Tecnológico de Monterrey's Full-Stack Web
 Development Programming Bootcamp (November 2020).
@@ -129,11 +129,12 @@ area of Mexico City and you need to eat, but you want to make a decision (visit
 or not visit a nearby restaurant) based on the level of risk of said area. In
 other words, ¿how to know the number of infected in your current location?
 ​
-**Covid Safe Places Searcher** is a tool that retrieves Mexico's government's
-current numbers of positive COVID-19 cases and hospitalization rates of each
-municipality/city in Mexico City. After obtaining this data, the application
-creates an estimated percentage of cases that the user can use to know the level
-of risk and "precaution" needed in each area.
+**Mexico City's Covid Safe Places Searcher (by municipality)** is a tool that 
+retrieves Mexico's government's current numbers of positive COVID-19 cases 
+and hospitalization rates of each municipality/city in Mexico City. After 
+obtaining this data, the application creates an estimated percentage of cases 
+that the user can use to know the level of risk and "precaution" 
+needed in each area.
 ​
 ## Functionalities
 ​
@@ -207,4 +208,3 @@ risk.
 Alheli Miranda 
 Rodrigo Sanchez 
 Mario N. Castro
-
